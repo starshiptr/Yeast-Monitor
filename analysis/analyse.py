@@ -125,7 +125,20 @@ def main(folder):
     plt.title("Yeast fermentation rate vs sugar" + ("  [SIMULATED DATA]" if simulated else ""))
     plt.legend()
     plt.savefig(folder / "calibration.png", dpi=150, bbox_inches="tight")
-    print(f"wrote {folder / 'model.json'} and {folder / 'calibration.png'}")
+
+    # Poster graph: the raw story. One line per bottle, rise from its own start.
+    plt.figure()
+    for p in sorted(paths, key=lambda p: parse_name(p)["sugar"]):
+        t, P, T, meta = load_run(p)
+        Pc = correct(P, T)
+        plt.plot(t, Pc - Pc[0], label=f"{meta['sugar']:g} % (r{meta['rep']})")
+    plt.axvspan(0, SETTLE_MIN, color="grey", alpha=0.15, label="vapour settling (ignored)")
+    plt.xlabel("time since sealing (min)")
+    plt.ylabel("pressure rise (hPa, temperature-corrected)")
+    plt.title("Pressure in each sealed bottle" + ("  [SIMULATED DATA]" if simulated else ""))
+    plt.legend(fontsize=8)
+    plt.savefig(folder / "pressure_vs_time.png", dpi=150, bbox_inches="tight")
+    print(f"wrote model.json, calibration.png and pressure_vs_time.png in {folder}")
 
 
 if __name__ == "__main__":
