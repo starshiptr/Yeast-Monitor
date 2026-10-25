@@ -9,7 +9,7 @@
 
 const int SDA_PIN = 21;
 const int SCL_PIN = 22;
-const uint8_t CHIP_ID_REG = 0xD0;  // 0x58 = BMP280, 0x60 = BME280 (same P/T registers)
+const uint8_t CHIP_ID_REG = 0xD0;  // 0x56-0x58 = BMP280, 0x60 = BME280 (same P/T registers)
 
 Adafruit_BMP280 bmp(&Wire);
 
@@ -34,9 +34,10 @@ void scanBus() {
 bool startSensor() {
   for (uint8_t addr : {0x76, 0x77}) {
     uint8_t id = readChipId(addr);
-    if (id == 0x58 || id == 0x60) {
+    // 0x56/0x57 = early-batch BMP280s that cheap modules still ship with.
+    if (id == 0x56 || id == 0x57 || id == 0x58 || id == 0x60) {
       Serial.printf("# sensor at 0x%02X chip id 0x%02X (%s)\n", addr, id,
-                    id == 0x58 ? "BMP280" : "BME280");
+                    id == 0x60 ? "BME280" : "BMP280");
       if (!bmp.begin(addr, id)) return false;
       // Max pressure oversampling + IIR filter: smoothest slope. A reading
       // takes ~40 ms, far inside the 1 s sample period.
