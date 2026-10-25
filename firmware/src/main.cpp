@@ -1,4 +1,4 @@
-// P-19 yeast fermentation monitor — firmware.
+// Yeast monitor — firmware.
 // The board only measures: once a second it prints `ms,P_hPa,T_C`.
 // All maths happens on the laptop (analysis/). Lines starting with '#'
 // are status messages the Python side skips.
@@ -56,7 +56,7 @@ void setup() {
   Serial.begin(115200);
   delay(500);
   Wire.begin(SDA_PIN, SCL_PIN);
-  Serial.println("# p19-yeast-monitor");
+  Serial.println("# yeast-monitor");
   scanBus();
   while (!startSensor()) {
     Serial.println("# sensor not found at 0x76/0x77 - check wiring (VCC->3V3, SDA->21, SCL->22)");

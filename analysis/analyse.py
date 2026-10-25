@@ -1,9 +1,9 @@
-"""Turn fermentation runs into a calibration curve (AI layer 1: the Monod fit).
+"""Turn fermentation runs into a rate-vs-sugar curve (the Monod fit).
 
 Per run:     load -> temperature-correct -> slope from minute 3 -> minus the control
 Across runs: fit rate = Vmax*S/(Ks+S), then invert it to predict sugar from a rate.
 
-    python analysis/analyse.py data/raw     # writes model.json + calibration.png there
+    python analysis/analyse.py data/raw     # writes model.json + both graphs there
 """
 import json
 import re
@@ -124,7 +124,7 @@ def main(folder):
     plt.ylabel("net pressure rise rate (hPa/min)")
     plt.title("Yeast fermentation rate vs sugar" + ("  [SIMULATED DATA]" if simulated else ""))
     plt.legend()
-    plt.savefig(folder / "calibration.png", dpi=150, bbox_inches="tight")
+    plt.savefig(folder / "rate_vs_sugar.png", dpi=150, bbox_inches="tight")
 
     # Poster graph: the raw story. One line per bottle, rise from its own start.
     plt.figure()
@@ -138,7 +138,7 @@ def main(folder):
     plt.title("Pressure in each sealed bottle" + ("  [SIMULATED DATA]" if simulated else ""))
     plt.legend(fontsize=8)
     plt.savefig(folder / "pressure_vs_time.png", dpi=150, bbox_inches="tight")
-    print(f"wrote model.json, calibration.png and pressure_vs_time.png in {folder}")
+    print(f"wrote model.json, rate_vs_sugar.png and pressure_vs_time.png in {folder}")
 
 
 if __name__ == "__main__":

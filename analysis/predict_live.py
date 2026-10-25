@@ -2,7 +2,7 @@
 
     python analysis/predict_live.py                        # live from COM3
     python analysis/predict_live.py --replay run.csv       # rehearse on a recorded run
-Uses the calibration in data/raw/model.json (from analyse.py).
+Uses the fitted curve in data/raw/model.json (from analyse.py).
 """
 import argparse
 import json

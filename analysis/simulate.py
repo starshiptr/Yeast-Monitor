@@ -10,7 +10,7 @@ from pathlib import Path
 
 import numpy as np
 
-VMAX, KS = 3.0, 0.5   # hPa/min, % sugar - invented, the real ones come from calibration
+VMAX, KS = 3.0, 0.5   # hPa/min, % sugar - invented, the real ones come from the experiment
 
 
 def simulate_run(sugar, vmax=VMAX, ks=KS, minutes=25, noise=0.01, bio_cv=0.05,
