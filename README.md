@@ -1,4 +1,4 @@
-# p19-yeast-monitor
+# Yeast monitor
 
 Measuring how fast yeast ferments sugar with a pressure sensor, then predicting a mystery bottle's sugar level live.
 
