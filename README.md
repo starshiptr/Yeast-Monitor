@@ -1,6 +1,6 @@
 # p19-yeast-monitor
 
-Measuring how fast yeast ferments sugar with a ₹70 pressure sensor, then predicting a mystery bottle's sugar level live.
+Measuring how fast yeast ferments sugar with a pressure sensor, then predicting a mystery bottle's sugar level live.
 
 Yeast eats sugar and releases CO₂. In a sealed bottle, that pushes the pressure up, and a BMP280 under the cap tracks it. More sugar means faster fermentation, up to a limit: the Monod saturation curve, `rate = Vmax·S / (Ks + S)`. We calibrate that curve across sugar levels, then run it backwards to guess the sugar in a bottle someone else mixed.
 
